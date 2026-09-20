@@ -1,0 +1,58 @@
+name: CI – Build & Test (v2 + v3)
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+env:
+  SOLUTION_PATH: "./ErikForwerk.TestAbstractions.v3.slnx"
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+#------------------------------------------------------------------------------------------------------------------------------------------
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        CONFIGURATION: [Debug, Release]
+
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 9.0.x
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v3
+
+    - name: Restore Solution
+      run: dotnet restore $env:SOLUTION_PATH
+
+    - name: Build Solution
+      run: dotnet build $env:SOLUTION_PATH --configuration $env:Configuration --no-restore
+      env:
+        Configuration: ${{ matrix.CONFIGURATION }}
+
+    - name: Run Unit Tests with Code Coverage
+      run: dotnet test $env:SOLUTION_PATH --configuration $env:Configuration --no-build --settings .runsettings --collect:"XPlat Code Coverage;Format=json,cobertura"
+      env:
+        Configuration: ${{ matrix.CONFIGURATION }}
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v6
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./TestResults/**/*.cobertura.xml
+        flags: unittests
