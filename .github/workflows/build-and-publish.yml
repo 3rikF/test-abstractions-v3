@@ -1,4 +1,4 @@
-name: Build and Pack v3-NuGet
+name: Build, Pack & Publish
 
 #------------------------------------------------------------------------------------------------------------------------------------------
 env:
@@ -42,7 +42,7 @@ jobs:
     - name: Install .NET Core
       uses: actions/setup-dotnet@v6
       with:
-        dotnet-version: 9.0.x
+        dotnet-version: 10.0.x
 
     # Determine the latest version tag and calculate new version
     - name: Determine new version
