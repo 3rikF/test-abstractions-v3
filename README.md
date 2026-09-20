@@ -4,12 +4,14 @@ Basic test-class implementations and abstractions that simplify the most common 
 
 ## Current Status
 
-[![Codecov Test Coverage]()](https://codecov.io/gh/3rikF/test-abstractions-v3)
-[![WakaTime Tracking]()]()
+[![codecov](https://codecov.io/gh/3rikF/test-abstractions-v3/graph/badge.svg?token=NMGTTG3KR4)](https://codecov.io/gh/3rikF/test-abstractions-v3)
+[![wakatime](https://wakatime.com/badge/user/ccce5eac-49f0-481f-998c-1183a3cd0b18/project/b5bbf7e9-f1d1-49e4-9451-ba72bac4627b.svg)](https://wakatime.com/badge/user/ccce5eac-49f0-481f-998c-1183a3cd0b18/project/b5bbf7e9-f1d1-49e4-9451-ba72bac4627b)
 
-[![Current Repository Status](https://github.com/3rikF/test-abstractions/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/3rikF/test-abstractions-v3/actions)
-[![NuGet]()]()
-[![NuGet STA]()]()
+[![Current Repository Status](https://github.com/3rikF/test-abstractions-v3/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/3rikF/test-abstractions-v3/actions)
+[![Current Repository Status](https://github.com/3rikF/test-abstractions-v3/actions/workflows/build-and-publish.yml/badge.svg)](https://github.com/3rikF/test-abstractions-v3/actions)
+
+[![NuGet](https://img.shields.io/nuget/v/ErikForwerk.TestAbstractions.v3?label=NuGet%20TestAbstractions.v3)](https://www.nuget.org/packages/ErikForwerk.TestAbstractions.v3/)
+[![NuGet STA](https://img.shields.io/nuget/v/ErikForwerk.TestAbstractions.STA.v3?label=NuGet%20TestAbstractions.STA.v3)](https://www.nuget.org/packages/ErikForwerk.TestAbstractions.STA.v3/)
 
 
 - [Features](#features)
