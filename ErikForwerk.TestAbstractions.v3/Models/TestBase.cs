@@ -62,6 +62,10 @@ public abstract class TestBase(ITestOutputHelper output)
 	/// </returns>
 	protected static string B(object? toStringObject)
 	{
+		(char sC, char eC) = toStringObject is string
+			? ('"', '"')
+			: ('[', ']');
+
 		if (toStringObject?.ToString() is not string s)
 			return NULL_STRING;
 
@@ -73,7 +77,7 @@ public abstract class TestBase(ITestOutputHelper output)
 
 		else
 			return string
-				.Concat('[', s.Trim('[', ']'), ']')
+				.Concat(sC, s.Trim(sC, eC), eC)
 				.Replace("\r\n", "\\r\\n")				//⏎ ␍␊
 				.Replace("\r", "\\r")					//← ␍
 				.Replace("\n", "\\n")					//↓ ␊

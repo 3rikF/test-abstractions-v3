@@ -49,7 +49,7 @@ public static class CompareHelper
 			{
 				testOutput.WriteLine($"[{propertyName}]");
 				Assert.Equal(a, b);
-				testOutput.WriteLine($"[👍 '{a}' == '{b}']");
+				testOutput.WriteLine($"[✔ '{a}' == '{b}']");
 				testOutput.WriteLine(string.Empty);
 			});
 	}
@@ -63,7 +63,7 @@ public static class CompareHelper
 			{
 				testOutput.WriteLine($"[{propertyName}]");
 				Assert.NotEqual(a, b);
-				testOutput.WriteLine($"[👍 '{a}' != '{b}']");
+				testOutput.WriteLine($"[✔ '{a}' != '{b}']");
 				testOutput.WriteLine(string.Empty);
 			});
 	}

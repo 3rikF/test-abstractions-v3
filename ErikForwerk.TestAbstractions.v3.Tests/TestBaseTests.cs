@@ -16,16 +16,16 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 	#region Test Helper Methods
 
 	[Theory]
-	[InlineData(null, "<null>")]
-	[InlineData("", "<empty>")]
-	[InlineData("  ", "<whitespace>")]
-	[InlineData("\t", "<whitespace>")]
-	[InlineData("\r", "<whitespace>")]
-	[InlineData("\n", "<whitespace>")]
-	[InlineData("\r\n", "<whitespace>")]
-	[InlineData("foobar", "[foobar]")]
-	[InlineData(123, "[123]")]
-	[InlineData("Line1\rLine2\nLine3\r\nLine4\tTabbed", "[Line1\\rLine2\\nLine3\\r\\nLine4\\tTabbed]")]
+	[InlineData(null,									"<null>")]
+	[InlineData("",										"<empty>")]
+	[InlineData("  ",									"<whitespace>")]
+	[InlineData("\t",									"<whitespace>")]
+	[InlineData("\r",									"<whitespace>")]
+	[InlineData("\n",									"<whitespace>")]
+	[InlineData("\r\n",									"<whitespace>")]
+	[InlineData("foobar",								"\"foobar\"")]
+	[InlineData(123,									"[123]")]
+	[InlineData("Line1\rLine2\nLine3\r\nLine4\tTabbed", "\"Line1\\rLine2\\nLine3\\r\\nLine4\\tTabbed\"")]
 	public void Test_B(object? input, string expectedOutput)
 	{
 		//--- ARRANGE ---------------------------------------------------------
@@ -43,8 +43,8 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 	public void Test_B_AlreadyBracketed()
 	{
 		//--- ARRANGE ---------------------------------------------------------
-		const string INPUT				= "[AlreadyBracketed]";
-		const string EXPECTED_OUTPUT	= "[AlreadyBracketed]";
+		const string INPUT				= """"[AlreadyBracketed]"""";
+		const string EXPECTED_OUTPUT	= "\"[AlreadyBracketed]\"";
 		TestConsole.WriteLine($"Expected output {EXPECTED_OUTPUT}");
 
 		//--- ACT -------------------------------------------------------------
@@ -56,16 +56,17 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 	}
 
 	[Theory]
-	[InlineData(null,						"<null>")]
-	[InlineData(typeof(TestBaseTests),		"[TestBaseTests]")]
-	[InlineData(typeof(int),				"[Int32]")]
-	[InlineData(typeof(long),				"[Int64]")]
-	[InlineData(typeof(byte),				"[Byte]")]
-	[InlineData(typeof(float),				"[Float]")]
-	[InlineData(typeof(double),				"[Double]")]
-	[InlineData(typeof(string),				"[String]")]
-	[InlineData(typeof(int[]),				"[Int32[]]")]
-	[InlineData(typeof(IEnumerable<int>),	"[IEnumerable<Int32>]")]
+	[InlineData(null,									"<null>")]
+	[InlineData(typeof(TestBaseTests),					"[TestBaseTests]")]
+	[InlineData(typeof(int),							"[Int32]")]
+	[InlineData(typeof(long),							"[Int64]")]
+	[InlineData(typeof(byte),							"[Byte]")]
+	[InlineData(typeof(float),							"[Float]")]
+	[InlineData(typeof(double),							"[Double]")]
+	[InlineData(typeof(string),							"[String]")]
+	[InlineData(typeof(int[]),							"[Int32[]]")]
+	[InlineData(typeof(List<int>),						"[List<Int32>]")]
+	[InlineData(typeof(IEnumerable<int>),				"[IEnumerable<Int32>]")]
 	[InlineData(typeof(Action<float, int, string>),		"[Action<Float, Int32, String>]")]
 	[InlineData(typeof(Func<float, int, string>),		"[Func<Float, Int32, String>]")]
 	[InlineData(typeof(ValueTuple<float, int, string>),	"[ValueTuple<Float, Int32, String>]")]
