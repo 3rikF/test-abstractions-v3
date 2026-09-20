@@ -116,29 +116,29 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[Fact]
 	public void GenerateClassInstance_ViaGeneric()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut		= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassFlat result	= sut.GenerateClassInstance<TestClassFlat>();
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(result);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated flat object");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated flat object");
 	}
 
 	[Fact]
 	public void GenerateClassInstance_ViaTypeParameter()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut		= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassFlat result	= sut.GenerateClassInstance<TestClassFlat>();
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(result);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated flat object");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated flat object");
 	}
 
 	private static void AssertNotDefaultValues(TestClassFlat result)
@@ -198,83 +198,83 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[Fact]
 	public void GenerateClassInstance_ViaGeneric_DoesNotReturnDefaultValues()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut		= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassFlat result	= sut.GenerateClassInstance<TestClassFlat>();
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		AssertNotDefaultValues(result);
 
-		TestConsole.WriteLine($"[?? PASSED] All properties have non-default values");
+		TestConsole.WriteLine($"[✔ PASSED] All properties have non-default values");
 	}
 
 	[Fact]
 	public void GenerateClassInstance_ViaTypeParameter_DoesNotReturnDefaultValues()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut		= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassFlat result	= (TestClassFlat)sut.GenerateClassInstance(typeof(TestClassFlat));
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		AssertNotDefaultValues(result);
 
-		TestConsole.WriteLine($"[?? PASSED] All properties have non-default values");
+		TestConsole.WriteLine($"[✔ PASSED] All properties have non-default values");
 	}
 
 	[Fact]
 	public void GetTestInstance_ObjectTree_Simple()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut		= new(new Random());
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassTree result	= sut.GenerateClassInstance<TestClassTree>();
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(result);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated object-tree");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated object-tree");
 	}
 
 	[Fact]
 	public void GenerateClassInstance_Repeatability_DifferentInstances()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties uutA = new();
 		AutoProperties uutB = new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassFlat resultA = uutA.GenerateClassInstance<TestClassFlat>();
 		TestClassFlat resultB = uutB.GenerateClassInstance<TestClassFlat>();
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(resultA);
 		Assert.NotNull(resultB);
 
-		//--- compare all properties via reflection ---------------------------
+		//---- compare all properties via reflection --------------------------
 		CompareHelper.AssertEqual(resultA, resultB, TestConsole);
 	}
 
 	[Fact]
 	public void GenerateClassInstance_Repeatability_SameInstance()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut = new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		TestClassFlat resultA = sut.GenerateClassInstance<TestClassFlat>();
 		sut.ResetRandom();
 
 		TestClassFlat resultB = sut.GenerateClassInstance<TestClassFlat>();
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(resultA);
 		Assert.NotNull(resultB);
 
-		//--- compare all properties via reflection ---------------------------
+		//---- compare all properties via reflection --------------------------
 		CompareHelper.AssertEqual(resultA, resultB, TestConsole);
 	}
 
@@ -283,19 +283,19 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[Fact]
 	public void GenerateClassInstance_NotSupportedType_ThrowsException()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		const string EXPECTED_MESSAGE_PART	= "Type [CancellationToken] is not supported.";
 		AutoProperties sut					= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		NotSupportedException ex = Assert.Throws<NotSupportedException>(
 			sut.GenerateClassInstance<TestClassWithUnsupportedTypes>);
 
-		//--- Assert ----------------------------------------------------------
+		//---- Assert ---------------------------------------------------------
 		Assert.NotNull(ex);
 		Assert.Contains(EXPECTED_MESSAGE_PART, ex.Message);
 
-		TestConsole.WriteLine($"[?? PASSED] Correctly threw {nameof(NotSupportedException)} with message containing [{EXPECTED_MESSAGE_PART}]");
+		TestConsole.WriteLine($"[✔ PASSED] Correctly threw {B(typeof(NotSupportedException))} with message containing {B(EXPECTED_MESSAGE_PART)}");
 	}
 
 	[Theory]
@@ -304,18 +304,18 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[InlineData(typeof(TestClassWithoutDefaultConstructor), "Type [TestClassWithoutDefaultConstructor] must be a class with a parameterless constructor.")] //--- does not have default constructor ---
 	public void GenerateClassInstance_WithInvalidType_ThrowsException(Type? invalidType, string expectedMessagePart)
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut = new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		ArgumentException ex = Assert.ThrowsAny<ArgumentException>(
 			() => sut.GenerateClassInstance(invalidType!));
 
-		//--- Assert ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(ex);
 		Assert.Contains(expectedMessagePart, ex.Message);
 
-		TestConsole.WriteLine($"[?? PASSED] Correctly threw {ex.GetType().Name} with expected message");
+		TestConsole.WriteLine($"[✔ PASSED] Correctly threw {B(ex.GetType().Name)} with expected message");
 	}
 
 	#endregion GenerateClassInstance
@@ -326,15 +326,15 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[Fact]
 	public void SetProperties_NullTarget_ThrowsException()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		const string EXPECTED_MESSAGE_PART	= "Value cannot be null.";
 		AutoProperties sut					= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
 			() => sut.SetProperties<TestClassFlat>(null!));
 
-		//--- Assert ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(ex);
 		Assert.Contains(EXPECTED_MESSAGE_PART, ex.Message);
 	}
@@ -342,20 +342,20 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[Fact]
 	public void SetProperties_ExceptProperties_DoesNotSetProperties()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		DateTime TEST_DATETIME		= new(1234, 12, 12, 12, 12, 12);
 		TestClassFlat testObjectA	= new() { DateTime1 = TEST_DATETIME };
 		TestClassFlat testObjectB	= new() { DateTime1 = TEST_DATETIME };
 		AutoProperties sut			= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		sut.ResetRandom();
 		sut.SetProperties(testObjectA);										//--- value should have changed ---
 
 		sut.ResetRandom();
 		sut.SetProperties(testObjectB, nameof(TestClassFlat.DateTime1));	//--- value should NOT have changed ---
 
-		//--- Assert ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotEqual(TEST_DATETIME, testObjectA.DateTime1);
 		Assert.Equal(TEST_DATETIME, testObjectB.DateTime1);
 	}
@@ -379,7 +379,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[Fact]
 	public void ResetRandom_ResetsAllProperties()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		Random rand			= new(123);
 		AutoProperties sut	= new(rand);
 
@@ -389,17 +389,17 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 		sut.ResetRandom();
 		TestClassFlat resultB = sut.GenerateClassInstance<TestClassFlat>();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		//--- TEST: reset the random seed to a different value to get different values for all properties ---
 		sut.ResetRandom(43);
-		//--- now explicitly set all properties to different values ----------
+		//---- now explicitly set all properties to different values ----------
 		sut.SetProperties(resultB);
 
-		//--- Assert ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(resultA);
 		Assert.NotNull(resultB);
 
-		//--- compare all properties via reflection ---------------------------
+		//---- compare all properties via reflection --------------------------
 		CompareHelper.AssertCompletelyUnequal(resultA, resultB, TestConsole);
 	}
 
@@ -410,22 +410,22 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[InlineData(3, 3)]
 	public void GenerateArray_WithValidValues_GeneratesArray(int minLength, int maxLength)
 	{
-		//--- ARRANGE ---------------------------------------------------------
-		TestConsole.WriteLine($"Testing with minLength=[{minLength}], maxLength=[{maxLength}]");
+		//---- ARRANGE --------------------------------------------------------
+		TestConsole.WriteLine($"Testing with minLength={B(minLength)}, maxLength={B(maxLength)}");
 		AutoProperties sut = new();
 
 		int[]? result = null;
 
-		//--- ACT -------------------------------------------------------------
-		Exception ex = Record.Exception(
+		//---- ACT ------------------------------------------------------------
+		Exception? ex = Record.Exception(
 			() => result = sut.GenerateArray<int>(minLength, maxLength));
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.Null(ex);
 		Assert.NotNull(result);
 
 		Assert.InRange(result.Length, minLength, maxLength);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated array with length in range [{minLength}, {maxLength}]");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated array with length in range [{minLength}, {maxLength}]");
 	}
 
 	[Theory]
@@ -437,21 +437,21 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[InlineData(10, 5,	"maxLength-minLength ('-5') must be a non-negative value.")]
 	public void GenerateArray_VMinMaxLength(int minLength, int maxLength, string expectedMessagePart)
 	{
-		//--- ARRANGE ---------------------------------------------------------
-		TestConsole.WriteLine($"Testing with minLength=[{minLength}], maxLength=[{maxLength}]");
+		//---- ARRANGE --------------------------------------------------------
+		TestConsole.WriteLine($"Testing with minLength={B(minLength)}, maxLength={B(maxLength)}");
 		AutoProperties sut = new();
 
-		//--- ACT -------------------------------------------------------------
-		Exception ex = Record.Exception(
+		//---- ACT ------------------------------------------------------------
+		Exception? ex = Record.Exception(
 			() => _ = sut.GenerateArray<int>(minLength, maxLength));
 
-		TestConsole.WriteLine($"[{ex.GetType().Name}] => [{ex.Message}]");
+		TestConsole.WriteLine($"{B(ex?.GetType())} => {B(ex?.Message)}");
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		ArgumentOutOfRangeException aoorex = Assert.IsType<ArgumentOutOfRangeException>(ex);
 		Assert.Contains(expectedMessagePart, aoorex.Message);
 
-		TestConsole.WriteLine($"[?? PASSED] Correctly threw {nameof(ArgumentOutOfRangeException)}]");
+		TestConsole.WriteLine($"[✔ PASSED] Correctly threw {B(nameof(ArgumentOutOfRangeException))}]");
 	}
 
 	[Theory]
@@ -460,118 +460,118 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 	[InlineData(1000)]
 	public void GenerateArray_SingleLength(int length)
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut = new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		int[] result = sut.GenerateArray<int>(length);
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(result);
 		Assert.Equal(result.Length, length);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated array with length [{length}]");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated array with length {B(length)}");
 	}
 
 	[Fact]
 	public void GenerateArray_DifferentTypes()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		const int NUM_ELEMENTS	= 3;
 		AutoProperties sut		= new(new Random());
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		int[] intArray				= sut.GenerateArray<int>(NUM_ELEMENTS);
 		string[] strings			= sut.GenerateArray<string>(NUM_ELEMENTS);
 		TestClassFlat[] objectsA	= sut.GenerateArray<TestClassFlat>(NUM_ELEMENTS);
 		TestClassTree[] objectsB	= sut.GenerateArray<TestClassTree>(NUM_ELEMENTS);
 		object[] objectsC			= sut.GenerateArray<object>(NUM_ELEMENTS);
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(intArray);
 		Assert.Equal(NUM_ELEMENTS, intArray.Length);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated [{intArray.GetType().GetElementType()!.Name}]-Array");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated {B(intArray.GetType())}");
 
 		Assert.NotNull(strings);
 		Assert.Equal(NUM_ELEMENTS, strings.Length);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated [{strings.GetType().GetElementType()!.Name}]-Array");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated {B(strings.GetType())}");
 
 		Assert.NotNull(objectsA);
 		Assert.Equal(NUM_ELEMENTS, objectsA.Length);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated [{objectsA.GetType().GetElementType()!.Name}]-Array");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated {B(objectsA.GetType())}");
 
 		Assert.NotNull(objectsB);
 		Assert.Equal(NUM_ELEMENTS, objectsB.Length);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated [{objectsB.GetType().GetElementType()!.Name}]-Array");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated {B(objectsB.GetType())}");
 
 		Assert.NotNull(objectsC);
 		Assert.Equal(NUM_ELEMENTS, objectsC.Length);
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated [{objectsC.GetType().GetElementType()!.Name}]-Array");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated {B(objectsC.GetType())}");
 	}
 
 	[Fact]
 	public void GenerateArray_NullType_ThrowsException()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		const string EXPECTED_MESSAGE_PART	= "Value cannot be null.";
 		AutoProperties sut					= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
 			() => sut.GenerateArray(null!, 10));
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(ex);
 		Assert.Contains(EXPECTED_MESSAGE_PART, ex.Message);
 
-		TestConsole.WriteLine($"[?? PASSED] Correctly threw  [{ex.GetType().Name}] for null type");
+		TestConsole.WriteLine($"[✔ PASSED] Correctly threw  {B(ex.GetType())} for null type");
 	}
 
 	[Fact]
 	public void GetRandomEnum()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut	= new();
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		ETestEnum value		= sut.GetRandomEnum<ETestEnum>();
 
-		//--- ASSERT ----------------------------------------------------------
-		TestConsole.WriteLine($"[?? PASSED] Successfully generated random enum-value [{value}]");
+		//---- ASSERT ---------------------------------------------------------
+		TestConsole.WriteLine($"[✔ PASSED] Successfully generated random enum-value {B(value)}");
 	}
 
 	[Fact]
 	public void GetRandomEnumExcept()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		AutoProperties sut	= new();
 
-		//--- ACT -------------------------------------------------------------
-		ETestEnum[] except	= Enum.GetValues<ETestEnum>().Except([ETestEnum.Three]).ToArray();   // except all but one value
+		//---- ACT ------------------------------------------------------------
+		ETestEnum[] except	= [.. Enum.GetValues<ETestEnum>().Except([ETestEnum.Three])];   // except all but one value
 		ETestEnum value		= sut.GetRandomEnum(except);
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.Equal(ETestEnum.Three, value);
-		TestConsole.WriteLine($"[?? PASSED] Successfully randomly chosen to single allowed enum-value [{value}]");
+		TestConsole.WriteLine($"[✔ PASSED] Successfully randomly chosen to single allowed enum-value {B(value)}");
 	}
 
 	[Fact]
 	public void GetDefaultEnumValue_ReturnsDefault()
 	{
-		//--- ARRANGE ---------------------------------------------------------
+		//---- ARRANGE --------------------------------------------------------
 		MethodInfo? method = typeof(AutoProperties)
 			.GetMethod("GetDefaultEnumValue", BindingFlags.NonPublic | BindingFlags.Static);
 
 		Assert.NotNull(method);
 
-		//--- ACT -------------------------------------------------------------
+		//---- ACT ------------------------------------------------------------
 		object? result = method.Invoke(null, [typeof(ETestEnum)]);
 
-		//--- ASSERT ----------------------------------------------------------
+		//---- ASSERT ---------------------------------------------------------
 		Assert.NotNull(result);
 		_ = Assert.IsType<ETestEnum>(result);
 		Assert.Equal(ETestEnum.Unset, result);
 
-		TestConsole.WriteLine($"[?? PASSED] GetDefaultEnumValue returned default enum value [{result}]");
+		TestConsole.WriteLine($"[✔ PASSED] GetDefaultEnumValue returned default enum value {B(result)}");
 	}
 
 	#endregion Test Methods
