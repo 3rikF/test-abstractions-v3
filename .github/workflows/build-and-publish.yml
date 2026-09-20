@@ -2,8 +2,6 @@ name: Build, Pack & Publish
 
 #------------------------------------------------------------------------------------------------------------------------------------------
 env:
-  # Replace with your solution name, i.e. MyWpfApp.sln.
-  SOLUTION_NAME: "./ErikForwerk.TestAbstractions.v3.slnx"
   PROJECT_BASE: "./ErikForwerk.TestAbstractions.v3/ErikForwerk.TestAbstractions.v3.csproj"
   PROJECT_STA: "./ErikForwerk.TestAbstractions.STA.v3/ErikForwerk.TestAbstractions.STA.v3.csproj"
 
@@ -25,11 +23,12 @@ on:
 jobs:
   pack-and-publish:
     # Only run on main branch when tests are successful
+    # Since this action does not run the tests itself (mind the STA-variant), it can use the Ubuntu-latest runner.
     if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Required to create and push tags
+      contents: write  # Required to create and push tagsS
       packages: write  # Required for publishing packages
 
     steps:
