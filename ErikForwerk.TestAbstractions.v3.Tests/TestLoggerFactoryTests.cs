@@ -1,4 +1,6 @@
 
+using System.Diagnostics.CodeAnalysis;
+
 using ErikForwerk.TestAbstractions.v3.Models;
 
 using Microsoft.Extensions.Logging;
@@ -27,13 +29,14 @@ public sealed class TestLoggerFactoryTests
 	}
 
 	[Fact]
-	public void AddProvider_ThrowsNotImplementedException()
+	public void AddProvider_ThrowsException()
 	{
 		//--- ARRANGE ---------------------------------------------------------
 		TestLoggerFactory sut = new (new TestLogger());
 
 		//--- ACT -------------------------------------------------------------
 		NotImplementedException ex = Assert.Throws<NotImplementedException>(
+			[ExcludeFromCodeCoverage]
 			() => sut.AddProvider(null!));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -41,13 +44,15 @@ public sealed class TestLoggerFactoryTests
 	}
 
 	[Fact]
-	public void Dispose_ThrowsNotImplementedException()
+	public void Dispose_ThrowsException()
 	{
 		//--- ARRANGE ---------------------------------------------------------
 		TestLoggerFactory sut = new (new TestLogger());
 
 		//--- ACT -------------------------------------------------------------
-		NotImplementedException ex = Assert.Throws<NotImplementedException>(sut.Dispose);
+		NotImplementedException ex = Assert.Throws<NotImplementedException>(
+			[ExcludeFromCodeCoverage]
+			() => sut.Dispose());
 
 		//--- ASSERT ----------------------------------------------------------
 		Assert.Equal("The method or operation is not implemented.", ex.Message);

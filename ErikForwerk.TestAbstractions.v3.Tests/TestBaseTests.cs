@@ -1,4 +1,6 @@
 
+using System.Diagnostics.CodeAnalysis;
+
 using ErikForwerk.TestAbstractions.v3.Models;
 
 using Microsoft.Extensions.Logging;
@@ -65,11 +67,14 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 	[InlineData(typeof(double),							"[Double]")]
 	[InlineData(typeof(string),							"[String]")]
 	[InlineData(typeof(int[]),							"[Int32[]]")]
+	[InlineData(typeof(int[,]),							"[Int32[,]]")]
+	[InlineData(typeof(int[,,]),						"[Int32[,,]]")]
 	[InlineData(typeof(List<int>),						"[List<Int32>]")]
 	[InlineData(typeof(IEnumerable<int>),				"[IEnumerable<Int32>]")]
 	[InlineData(typeof(Action<float, int, string>),		"[Action<Float, Int32, String>]")]
 	[InlineData(typeof(Func<float, int, string>),		"[Func<Float, Int32, String>]")]
 	[InlineData(typeof(ValueTuple<float, int, string>),	"[ValueTuple<Float, Int32, String>]")]
+	[InlineData(typeof(HashSet<float>),					"[HashSet<Float>]")]
 	public void Test_B_TypeShorthand(Type? testType, string expectedOutput)
 	{
 		//--- ACT -------------------------------------------------------------
@@ -143,7 +148,9 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 		const string EXPECTED_MESSAGE = "This method should not have been executed.";
 
 		//--- ACT -------------------------------------------------------------
-		XunitException ex = Assert.Throws<XunitException>(FailTest);
+		XunitException ex = Assert.Throws<XunitException>(
+			[ExcludeFromCodeCoverage]
+			() => FailTest());
 
 		//--- ASSERT ----------------------------------------------------------
 		Assert.Equal(EXPECTED_MESSAGE, ex.Message);
@@ -162,6 +169,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
+			[ExcludeFromCodeCoverage]
 			() => FailTest(TEST_PARAM));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -182,6 +190,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
+			[ExcludeFromCodeCoverage]
 			() => FailTest(TEST_PARAM_1, TEST_PARAM_2));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -204,7 +213,9 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 		const string EXPECTED_MESSAGE = "This method should not have been executed. [no parameters]";
 
 		//--- ACT -------------------------------------------------------------
-		XunitException ex = Assert.Throws<XunitException>(FailTest<string>);
+		XunitException ex = Assert.Throws<XunitException>(
+			[ExcludeFromCodeCoverage]
+			() => FailTest<string>());
 
 		//--- ASSERT ----------------------------------------------------------
 		Assert.Equal(EXPECTED_MESSAGE, ex.Message);
@@ -223,6 +234,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
+			[ExcludeFromCodeCoverage]
 			() => FailTest<string, string>(TEST_PARAM));
 
 		//--- ASSERT ----------------------------------------------------------

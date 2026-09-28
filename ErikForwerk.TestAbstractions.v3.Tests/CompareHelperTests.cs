@@ -114,7 +114,7 @@ public sealed class CompareHelperTests(ITestOutputHelper toh) : TestBase(toh)
 		FDTC obj2 = new() { Name = testStringB };
 
 		//--- ACT & ASSERT ----------------------------------------------------
-		Exception exception = Record.Exception(
+		Exception? exception = Record.Exception(
 			() => CompareHelper.AssertEqual(obj1, obj2, TestConsole));
 
 		if (expectedEquality)
@@ -144,7 +144,7 @@ public sealed class CompareHelperTests(ITestOutputHelper toh) : TestBase(toh)
 		TestConsole.WriteLine("");
 
 		//--- ACT & ASSERT ----------------------------------------------------
-		Exception ex = Record.Exception(
+		Exception? ex = Record.Exception(
 			() => CompareHelper.AssertEqual(obj1, obj2, TestConsole));
 
 		if (expectedEquality)
@@ -174,7 +174,7 @@ public sealed class CompareHelperTests(ITestOutputHelper toh) : TestBase(toh)
 		TestConsole.WriteLine("");
 
 		//--- ACT & ASSERT ----------------------------------------------------
-		Exception ex = Record.Exception(
+		Exception? ex = Record.Exception(
 			() => CompareHelper.AssertEqual(obj1, obj2, TestConsole));
 
 		if (expectedEquality)
@@ -204,7 +204,7 @@ public sealed class CompareHelperTests(ITestOutputHelper toh) : TestBase(toh)
 		FDTC obj2 = new() { Name = testStringB };
 
 		//--- ACT & ASSERT ----------------------------------------------------
-		Exception exception = Record.Exception(
+		Exception? exception = Record.Exception(
 			() => CompareHelper.AssertCompletelyUnequal(obj1, obj2, TestConsole));
 
 		if (!expectedInequality)

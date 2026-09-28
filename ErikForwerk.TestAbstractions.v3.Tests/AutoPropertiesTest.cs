@@ -289,7 +289,8 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		NotSupportedException ex = Assert.Throws<NotSupportedException>(
-			sut.GenerateClassInstance<TestClassWithUnsupportedTypes>);
+			[ExcludeFromCodeCoverage]
+			() => sut.GenerateClassInstance<TestClassWithUnsupportedTypes>());
 
 		//---- Assert ---------------------------------------------------------
 		Assert.NotNull(ex);
@@ -309,6 +310,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		ArgumentException ex = Assert.ThrowsAny<ArgumentException>(
+			[ExcludeFromCodeCoverage]
 			() => sut.GenerateClassInstance(invalidType!));
 
 		//---- ASSERT ---------------------------------------------------------
@@ -332,6 +334,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+			[ExcludeFromCodeCoverage]
 			() => sut.SetProperties<TestClassFlat>(null!));
 
 		//---- ASSERT ---------------------------------------------------------
@@ -443,9 +446,11 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		Exception? ex = Record.Exception(
+			[ExcludeFromCodeCoverage]
 			() => _ = sut.GenerateArray<int>(minLength, maxLength));
 
-		TestConsole.WriteLine($"{B(ex?.GetType())} => {B(ex?.Message)}");
+		Assert.NotNull(ex);
+		TestConsole.WriteLine($"{B(ex.GetType())} => {B(ex.Message)}");
 
 		//---- ASSERT ---------------------------------------------------------
 		ArgumentOutOfRangeException aoorex = Assert.IsType<ArgumentOutOfRangeException>(ex);
@@ -517,6 +522,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
+			[ExcludeFromCodeCoverage]
 			() => sut.GenerateArray(null!, 10));
 
 		//---- ASSERT ---------------------------------------------------------
