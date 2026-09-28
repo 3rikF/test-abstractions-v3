@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write  # Required to create and push tagsS
+      contents: write  # Required to create and push tags
       packages: write  # Required for publishing packages
       id-token: write  # enable GitHub OIDC token issuance for this job (for NuGet)
 
@@ -173,4 +173,3 @@ jobs:
           echo "::error::Failed to publish STA package: ${{ steps.pack.outputs.nupkg_path_sta }}"
           exit 1
         fi
-
