@@ -18,7 +18,7 @@ public sealed class CompareHelperTests(ITestOutputHelper toh) : TestBase(toh)
 	//-----------------------------------------------------------------------------------------------------------------
 	#region Nested Types
 
-	[ExcludeFromCodeCoverage(Justification = "Dummy class for testing purposes only.")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	internal record FirstDummyTestClass
 	{
 		public FirstDummyTestClass()
@@ -30,13 +30,13 @@ public sealed class CompareHelperTests(ITestOutputHelper toh) : TestBase(toh)
 		public string? Name { get; set; }
 	}
 
-	[ExcludeFromCodeCoverage(Justification = "Dummy class for testing purposes only.")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	internal sealed class SecondDummyTestClass
 	{
 		public IEnumerable<int>? Numbers { get; set; }
 	}
 
-	[ExcludeFromCodeCoverage(Justification = "Dummy class for testing purposes only.")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	internal sealed class ThirdDummyTestClass
 	{
 		public IEnumerable<object>? Objects { get; set; }

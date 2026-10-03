@@ -26,7 +26,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 		Five,
 	}
 
-	[ExcludeFromCodeCoverage(Justification = "dummy test-class without logic")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	private class TestClassFlat
 	{
 		public ulong ULongProperty { get; set; }
@@ -82,7 +82,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 		public TimeOnly? TimeOnlyProperty { get; set; }
 	}
 
-	[ExcludeFromCodeCoverage(Justification = "dummy test-class without logic")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	private sealed class TestClassTree : TestClassFlat
 	{
 		public TestClassFlat? ChildObject { get; set; }
@@ -98,13 +98,13 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 	}
 
-	[ExcludeFromCodeCoverage(Justification = "dummy test-class without logic")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	private sealed class TestClassWithUnsupportedTypes
 	{
 		public CancellationToken? CancellationTokenProperty { get; set; }
 	}
 
-	[ExcludeFromCodeCoverage(Justification = "dummy test-class without logic")]
+	[ExcludeFromCodeCoverage(Justification = Excuses.DUMMY_TEST_CLASS)]
 	private sealed record TestClassWithoutDefaultConstructor(string Name)
 	{ }
 
@@ -289,7 +289,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		NotSupportedException ex = Assert.Throws<NotSupportedException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => sut.GenerateClassInstance<TestClassWithUnsupportedTypes>());
 
 		//---- Assert ---------------------------------------------------------
@@ -310,7 +310,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		ArgumentException ex = Assert.ThrowsAny<ArgumentException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => sut.GenerateClassInstance(invalidType!));
 
 		//---- ASSERT ---------------------------------------------------------
@@ -334,7 +334,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => sut.SetProperties<TestClassFlat>(null!));
 
 		//---- ASSERT ---------------------------------------------------------
@@ -446,7 +446,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		Exception? ex = Record.Exception(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => _ = sut.GenerateArray<int>(minLength, maxLength));
 
 		Assert.NotNull(ex);
@@ -522,7 +522,7 @@ public sealed class AutoPropertiesTest(ITestOutputHelper testOutputHelper) : Tes
 
 		//---- ACT ------------------------------------------------------------
 		ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => sut.GenerateArray(null!, 10));
 
 		//---- ASSERT ---------------------------------------------------------

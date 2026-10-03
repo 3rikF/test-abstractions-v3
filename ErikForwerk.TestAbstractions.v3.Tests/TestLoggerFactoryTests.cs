@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using ErikForwerk.TestAbstractions.v3.Models;
+using ErikForwerk.TestAbstractions.v3.Tools;
 
 using Microsoft.Extensions.Logging;
 
@@ -36,7 +37,7 @@ public sealed class TestLoggerFactoryTests
 
 		//--- ACT -------------------------------------------------------------
 		NotImplementedException ex = Assert.Throws<NotImplementedException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => sut.AddProvider(null!));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -51,7 +52,7 @@ public sealed class TestLoggerFactoryTests
 
 		//--- ACT -------------------------------------------------------------
 		NotImplementedException ex = Assert.Throws<NotImplementedException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => sut.Dispose());
 
 		//--- ASSERT ----------------------------------------------------------

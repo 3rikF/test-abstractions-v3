@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using ErikForwerk.TestAbstractions.STA.v3.Models;
+using ErikForwerk.TestAbstractions.v3.Tools;
 
 using Xunit;
 
@@ -16,7 +17,7 @@ public sealed class StaTestBaseTests(ITestOutputHelper toh) : StaTestBase(toh)
 	{
 		//--- ACT -------------------------------------------------------------
 		Exception ex = Assert.Throws<Exception>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => RunOnSTAThread(() => throw new Exception("Test exception")));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -59,7 +60,7 @@ public sealed class StaTestBaseTests(ITestOutputHelper toh) : StaTestBase(toh)
 	{
 		//--- ACT -------------------------------------------------------------
 		Exception ex = Assert.Throws<Exception>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => RunOnSTAThread<object>(() => throw new Exception("Test exception")));
 
 		//--- ASSERT ----------------------------------------------------------

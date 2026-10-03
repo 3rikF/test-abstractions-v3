@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using ErikForwerk.TestAbstractions.v3.Models;
+using ErikForwerk.TestAbstractions.v3.Tools;
 
 using Microsoft.Extensions.Logging;
 
@@ -149,7 +150,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => FailTest());
 
 		//--- ASSERT ----------------------------------------------------------
@@ -169,7 +170,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => FailTest(TEST_PARAM));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -190,7 +191,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => FailTest(TEST_PARAM_1, TEST_PARAM_2));
 
 		//--- ASSERT ----------------------------------------------------------
@@ -214,7 +215,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => FailTest<string>());
 
 		//--- ASSERT ----------------------------------------------------------
@@ -234,7 +235,7 @@ public sealed class TestBaseTests(ITestOutputHelper toh) : TestBase(toh)
 
 		//--- ACT -------------------------------------------------------------
 		XunitException ex = Assert.Throws<XunitException>(
-			[ExcludeFromCodeCoverage]
+			[ExcludeFromCodeCoverage(Justification = Excuses.THROWS_EXCEPTION)]
 			() => FailTest<string, string>(TEST_PARAM));
 
 		//--- ASSERT ----------------------------------------------------------
