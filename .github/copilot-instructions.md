@@ -53,7 +53,7 @@ When the user asks to write a commit message, follow these strict rules to analy
 ## Formatting Rules
 
 1. **Format Layout:** Follow the Conventional Commits specification:
-   `<type>: <GitHub Issue ID> <Short summary close to 50 chars>`
+   `<type>: <Short summary close to 50 chars>`
    `[Optional body detailing the 'why' behind the change]`
    Always use English to write commit messages.
    Start the summary with a capital letter.
